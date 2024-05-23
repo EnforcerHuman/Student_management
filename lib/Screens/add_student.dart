@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/Functions/add_or_edit.dart';
@@ -11,6 +13,7 @@ class AddStudent extends StatelessWidget {
   String? place;
   String? phone;
   String title;
+  int? id;
   final TextEditingController nameController;
   final TextEditingController ageController;
   final TextEditingController placeController;
@@ -22,7 +25,8 @@ class AddStudent extends StatelessWidget {
       this.name = '',
       this.age,
       this.place,
-      this.phone})
+      this.phone,
+      this.id})
       : nameController = TextEditingController(text: name),
         ageController = TextEditingController(text: age ?? ''),
         phoneController = TextEditingController(text: phone ?? ""),
@@ -88,12 +92,18 @@ class AddStudent extends StatelessWidget {
                     );
                     return;
                   }
-
+                  int newid = Random().nextInt(100000);
+                  // int unique = DateTime.now().millisecondsSinceEpoch;
+                  // print(unique);
                   studentmodel student = studentmodel(
-                      age: age, name: name, email: place, phone: phone);
+                      age: age,
+                      name: name,
+                      email: place,
+                      phone: phone,
+                      id: id ?? newid);
                   // studentProvider.addstudent(student);
                   print('actual name:${student.name} key: $name');
-                  addOrEdit(title, context, student, existingname);
+                  addOrEdit(title, context, student, id ?? newid);
                   Navigator.pop(context);
                 },
                 child: const Text('Submit'),

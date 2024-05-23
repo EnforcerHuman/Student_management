@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
         leading: IconButton(
           onPressed: () {
-            StudentProvider.getsinglestudentprovider('Melbin');
+            // StudentProvider.getsinglestudentprovider('Melbin');
           },
           icon: const Icon(Icons.access_alarm_outlined),
         ),
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                     print(index);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => DetailScreen(
-                        name: studentProvider.studentlist[index].name,
+                        name: studentProvider.studentlist[index],
                         index: index,
                       ),
                     ));
@@ -85,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                                           .studentlist[index].email,
                                       phone: studentProvider
                                           .studentlist[index].phone,
+                                      id: studentProvider.studentlist[index].id,
                                     )));
                           },
                         ),
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                           child: Text('Delete'),
                           onTap: () {
                             studentProvider.deleteStudentProvider(
-                                studentProvider.studentlist[index].name, index);
+                                studentProvider.studentlist[index].id, index);
                           },
                         ),
                       ],

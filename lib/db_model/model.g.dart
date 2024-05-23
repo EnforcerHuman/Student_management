@@ -21,13 +21,14 @@ class studentmodelAdapter extends TypeAdapter<studentmodel> {
       name: fields[0] as String,
       email: fields[2] as String,
       phone: fields[3] as String,
+      id: fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, studentmodel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class studentmodelAdapter extends TypeAdapter<studentmodel> {
       ..writeByte(2)
       ..write(obj.email)
       ..writeByte(3)
-      ..write(obj.phone);
+      ..write(obj.phone)
+      ..writeByte(4)
+      ..write(obj.id);
   }
 
   @override

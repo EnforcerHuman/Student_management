@@ -6,7 +6,8 @@ class AddStudentProvider extends ChangeNotifier {
   List<studentmodel> studentlist = [];
   studentmodel? studentdetails;
   Future<void> addstudent(studentmodel student) async {
-    await addStudent(student.age, student.name, student.email, student.phone);
+    await addStudent(
+        student.age, student.name, student.email, student.phone, student.id);
     // fetchstudentProvider();
     // notifyListeners();
   }
@@ -16,19 +17,18 @@ class AddStudentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteStudentProvider(String name, index) async {
-    await deletestudent(name);
+  Future<void> deleteStudentProvider(int id, index) async {
+    await deletestudent(id);
     await fetchstudentProvider();
   }
 
-  Future<void> editstudentprovider(
-      String originalName, age, name, email, phone) async {
-    await editStudent(originalName, age, name, email, phone);
+  Future<void> editstudentprovider(int id, age, name, email, phone) async {
+    await editStudent(id, age, name, email, phone);
+    notifyListeners();
   }
 
-  Future<void> getsinglestudentprovider(name) async {
-    studentdetails = await getStudentDetails(name);
-    print({studentdetails?.name});
+  Future<void> getsinglestudentprovider(int id) async {
+    studentdetails = await getStudentDetails(id);
     notifyListeners();
   }
 }

@@ -1,20 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studentapp/Screens/add_student.dart';
+import 'package:studentapp/db_model/model.dart';
 import 'package:studentapp/provider/add_student_provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final int index;
-  final String name;
+  final studentmodel name;
   const DetailScreen({super.key, required this.index, required this.name});
   @override
   Widget build(BuildContext context) {
     Provider.of<AddStudentProvider>(
       context,
-    ).getsinglestudentprovider(name);
+    ).getsinglestudentprovider(name.id);
 
     var media = MediaQuery.of(context).size;
     final studentprovider = Provider.of<AddStudentProvider>(context);
-    studentprovider.getsinglestudentprovider(name);
+    studentprovider.getsinglestudentprovider(name.id);
     return Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.blue,
@@ -64,7 +67,7 @@ class DetailScreen extends StatelessWidget {
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
-                                    fontWeight: FontWeight.bold))
+                                    fontWeight: FontWeight.bold)),
                           ],
                         ),
                         const SizedBox(
@@ -92,6 +95,63 @@ class DetailScreen extends StatelessWidget {
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold))
                           ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                                "Student Id: ${studentprovider.studentlist[index].id}",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 250,
+                          child: Row(
+                            children: [
+                              CupertinoButton(
+                                  // color: Color.fromRGBO(223, 217, 163, 1)
+                                  //     .withOpacity(0.35),
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: const Text(
+                                    'Edit',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (ctx) => AddStudent(
+                                                  title: 'Edit Details',
+                                                  name: studentprovider
+                                                      .studentlist[index].name,
+                                                  age: studentprovider
+                                                      .studentlist[index].age,
+                                                  place: studentprovider
+                                                      .studentlist[index].email,
+                                                  phone: studentprovider
+                                                      .studentlist[index].phone,
+                                                  id: studentprovider
+                                                      .studentlist[index].id,
+                                                )));
+                                  }),
+                              // SizedBox(
+                              //   width: 20,
+                              // ),
+                              CupertinoButton(
+                                  color: Color.fromRGBO(223, 217, 163, 1)
+                                      .withOpacity(0.35),
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: Text('Delete'),
+                                  onPressed: () {})
+                            ],
+                          ),
                         )
                       ],
                     ),

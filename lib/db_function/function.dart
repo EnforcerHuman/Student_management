@@ -4,11 +4,11 @@ import 'package:studentapp/db_model/model.dart';
 List<studentmodel> studentlistnormal = [];
 
 Future<void> addStudent(
-    String age, String name, String email, String phone) async {
+    String age, String name, String email, String phone, int id) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
   final student =
-      studentmodel(age: age, name: name, email: email, phone: phone);
-  final test = await studentBox.put(name, student);
+      studentmodel(age: age, name: name, email: email, phone: phone, id: id);
+  final test = await studentBox.put(id, student);
   return test;
 }
 
@@ -22,23 +22,20 @@ Future<List<studentmodel>> printAllStudents() async {
   return students;
 }
 
-Future<void> deletestudent(String name) async {
+Future<void> deletestudent(int id) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
-  await studentBox.delete(name);
+  await studentBox.delete(id);
 }
 
-Future<void> editStudent(String originalName, String age, String name,
-    String email, String phone) async {
+Future<void> editStudent(
+    int id, String age, String name, String email, String phone) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
 
   // If the name has changed, delete the old entry
-  if (originalName != name) {
-    await studentBox.delete(originalName);
-  }
 
   final student =
-      studentmodel(age: age, name: name, email: email, phone: phone);
-  await studentBox.put(name, student);
+      studentmodel(age: age, name: name, email: email, phone: phone, id: id);
+  await studentBox.put(id, student);
 }
 
 Future<List<studentmodel>> searchStudents(String query) async {
@@ -49,9 +46,9 @@ Future<List<studentmodel>> searchStudents(String query) async {
       .toList();
 }
 
-Future<studentmodel?> getStudentDetails(String name) async {
+Future<studentmodel?> getStudentDetails(int id) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
-  final student = studentBox.get(name);
+  final student = studentBox.get(id);
 
   if (student != null) {
     return student;

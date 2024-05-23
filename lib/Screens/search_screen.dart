@@ -71,8 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (ctx) => DetailScreen(
-                                    index: index,
-                                    name: searchResults[index].name)));
+                                    index: index, name: searchResults[index])));
                           },
                           child: ListTile(
                             title: Text(student
