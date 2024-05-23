@@ -17,7 +17,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            StudentProvider.getsinglestudentprovider('Melbin');
+          },
           icon: const Icon(Icons.access_alarm_outlined),
         ),
         title: const Center(child: Text('Student Data')),
@@ -43,7 +45,10 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     print(index);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => DetailScreen(index: index),
+                      builder: (ctx) => DetailScreen(
+                        name: studentProvider.studentlist[index].name,
+                        index: index,
+                      ),
                     ));
                   },
                   child: ListTile(

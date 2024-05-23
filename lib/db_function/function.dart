@@ -48,3 +48,14 @@ Future<List<studentmodel>> searchStudents(String query) async {
           (student) => student.name.toLowerCase().contains(query.toLowerCase()))
       .toList();
 }
+
+Future<studentmodel?> getStudentDetails(String name) async {
+  final studentBox = await Hive.openBox<studentmodel>('student_db');
+  final student = studentBox.get(name);
+
+  if (student != null) {
+    return student;
+  } else {
+    return null; // Return null if student not found
+  }
+}
