@@ -3,11 +3,11 @@ import 'package:studentapp/db_model/model.dart';
 
 List<studentmodel> studentlistnormal = [];
 
-Future<void> addStudent(
-    String age, String name, String email, String phone, int id) async {
+Future<void> addStudent(String age, String name, String email, String phone,
+    int id, String? image) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
-  final student =
-      studentmodel(age: age, name: name, email: email, phone: phone, id: id);
+  final student = studentmodel(
+      age: age, name: name, email: email, phone: phone, id: id, image: image);
   final test = await studentBox.put(id, student);
   return test;
 }
@@ -27,14 +27,14 @@ Future<void> deletestudent(int id) async {
   await studentBox.delete(id);
 }
 
-Future<void> editStudent(
-    int id, String age, String name, String email, String phone) async {
+Future<void> editStudent(int id, String age, String name, String email,
+    String phone, String image) async {
   final studentBox = await Hive.openBox<studentmodel>('student_db');
 
   // If the name has changed, delete the old entry
 
-  final student =
-      studentmodel(age: age, name: name, email: email, phone: phone, id: id);
+  final student = studentmodel(
+      age: age, name: name, email: email, phone: phone, id: id, image: image);
   await studentBox.put(id, student);
 }
 

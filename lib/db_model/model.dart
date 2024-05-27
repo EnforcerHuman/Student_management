@@ -13,10 +13,13 @@ class studentmodel {
   String phone;
   @HiveField(4)
   int id;
+  @HiveField(5)
+  String? image;
   studentmodel(
       {required this.age,
       required this.name,
       required this.email,
       required this.phone,
-      required this.id});
+      required this.id,
+      this.image});
 }

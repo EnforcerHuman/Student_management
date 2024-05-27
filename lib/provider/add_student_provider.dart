@@ -5,11 +5,12 @@ import 'package:studentapp/db_model/model.dart';
 class AddStudentProvider extends ChangeNotifier {
   List<studentmodel> studentlist = [];
   studentmodel? studentdetails;
+  List<studentmodel> searchedstudents = [];
   Future<void> addstudent(studentmodel student) async {
-    await addStudent(
-        student.age, student.name, student.email, student.phone, student.id);
-    // fetchstudentProvider();
-    // notifyListeners();
+    await addStudent(student.age, student.name, student.email, student.phone,
+        student.id, student.image);
+    fetchstudentProvider();
+    notifyListeners();
   }
 
   Future<void> fetchstudentProvider() async {
@@ -22,13 +23,19 @@ class AddStudentProvider extends ChangeNotifier {
     await fetchstudentProvider();
   }
 
-  Future<void> editstudentprovider(int id, age, name, email, phone) async {
-    await editStudent(id, age, name, email, phone);
+  Future<void> editstudentprovider(
+      int id, age, name, email, phone, image) async {
+    await editStudent(id, age, name, email, phone, image);
     notifyListeners();
   }
 
   Future<void> getsinglestudentprovider(int id) async {
     studentdetails = await getStudentDetails(id);
+    notifyListeners();
+  }
+
+  Future<void> searchStudentProvider(String query) async {
+    searchedstudents = await searchStudents(query);
     notifyListeners();
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/Screens/add_student.dart';
@@ -12,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<AddStudentProvider>(context, listen: false)
         .fetchstudentProvider();
-    final StudentProvider = Provider.of<AddStudentProvider>(context);
+    // final StudentProvider = Provider.of<AddStudentProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -43,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    print(index);
+                    print(studentProvider.studentlist[index].image);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => DetailScreen(
                         name: studentProvider.studentlist[index],
@@ -52,23 +54,17 @@ class HomeScreen extends StatelessWidget {
                     ));
                   },
                   child: ListTile(
-                    leading: const CircleAvatar(
-                      backgroundColor: Colors.amber,
+                    leading: CircleAvatar(
+                      backgroundImage: studentProvider
+                                  .studentlist[index].image !=
+                              null
+                          ? FileImage(
+                              File(studentProvider.studentlist[index].image!))
+                          : const AssetImage('assets/images/student.png'),
                     ),
                     title: Text(studentProvider.studentlist[index].name),
-                    // trailing: IconButton(
-                    //     onPressed: () {
-                    //       // studentProvider.deleteStudentProvider(
-                    //       //     studentProvider.studentlist[index].name, index);
-                    //       // editstudent(studentProvider.studentlist[index].name,
-                    //       //     'Shiva', '222', '22222', 'wwww');
-
-                    //     },
-                    //     icon: const Icon(Icons.delete)),
                     trailing: PopupMenuButton(
-                      onSelected: (value) {
-                        // Handle selection of an option
-                      },
+                      onSelected: (value) {},
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           value: 1,

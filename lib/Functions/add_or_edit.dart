@@ -7,8 +7,8 @@ Future<void> addOrEdit(
   final studentProvider =
       Provider.of<AddStudentProvider>(context, listen: false);
   if (title == 'Edit Details') {
-    studentProvider.editstudentprovider(
-        id, student.age, student.name, student.email, student.phone);
+    studentProvider.editstudentprovider(id, student.age, student.name,
+        student.email, student.phone, student.image);
   } else if (title == 'Add student') {
     await studentProvider.addstudent(student);
   }

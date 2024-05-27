@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentapp/Screens/add_student.dart';
 import 'package:studentapp/db_model/model.dart';
 import 'package:studentapp/provider/add_student_provider.dart';
+import 'package:studentapp/widgets/student_detail_text.dart';
 
 class DetailScreen extends StatelessWidget {
   final int index;
@@ -28,10 +31,15 @@ class DetailScreen extends StatelessWidget {
             return Column(
               children: [
                 Center(
-                  child:
-                      SizedBox(width: 200, height: 200, child: CircleAvatar()),
+                  child: SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: CircleAvatar(
+                          backgroundImage: FileImage(File(
+                              studentprovider.studentlist[index].image ??
+                                  '')))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -44,72 +52,40 @@ class DetailScreen extends StatelessWidget {
                   height: 400,
                   child: Center(
                     child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                                "Name : ${studentprovider.studentdetails?.name}",
-                                style: const TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))
-                          ],
+                        StudentdetailText(
+                          text: studentprovider.studentlist[index].name,
+                          leading: 'Name',
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                                "place : ${studentprovider.studentlist[index].email}",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
-                          ],
+                        StudentdetailText(
+                          text: studentprovider.studentlist[index].email,
+                          leading: 'Place',
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                                "age : ${studentprovider.studentlist[index].age}",
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 153, 93, 93),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))
-                          ],
+                        StudentdetailText(
+                          text: studentprovider.studentlist[index].age,
+                          leading: 'Age',
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                                "phone : +91 ${studentprovider.studentlist[index].phone}",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))
-                          ],
+                        StudentdetailText(
+                          text: studentprovider.studentlist[index].phone,
+                          leading: 'Phone',
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                                "Student Id: ${studentprovider.studentlist[index].id}",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                        SizedBox(
+                        StudentdetailText(
+                            text: studentprovider.studentlist[index].id
+                                .toString(),
+                            leading: 'Student Id'),
+                        const SizedBox(
                           height: 20,
                         ),
                         SizedBox(
@@ -117,8 +93,6 @@ class DetailScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               CupertinoButton(
-                                  // color: Color.fromRGBO(223, 217, 163, 1)
-                                  //     .withOpacity(0.35),
                                   borderRadius: BorderRadius.circular(30),
                                   child: const Text(
                                     'Edit',
@@ -141,14 +115,11 @@ class DetailScreen extends StatelessWidget {
                                                       .studentlist[index].id,
                                                 )));
                                   }),
-                              // SizedBox(
-                              //   width: 20,
-                              // ),
                               CupertinoButton(
                                   color: Color.fromRGBO(223, 217, 163, 1)
                                       .withOpacity(0.35),
                                   borderRadius: BorderRadius.circular(30),
-                                  child: Text('Delete'),
+                                  child: const Text('Delete'),
                                   onPressed: () {})
                             ],
                           ),
